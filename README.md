@@ -8,9 +8,11 @@ It's payments are powered by strip and has basic event registration and summer c
 
 On your terminal run the following commands.
 
-`$ bundle install`
-`$ bundle exec rake db:create db:setup`
-`$ rails s`
+```shell
+$ bundle install
+$ bundle exec rake db:create db:setup
+$ rails s
+```
 
 Now if you visit http://localhost:3000/admin
 
