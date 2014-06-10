@@ -1,0 +1,10 @@
+- cache [@page, :index] do
+  = @page.html
+
+%ul.list
+  - @events.each do |event|
+    = content_tag_for(:li, event) do
+      = link_to event.title, new_event_registration_path(event)
+      = "- #{event.camp_dates.map{|d| d.strftime('%B %d')}.join(' til ')}"
+      %p
+        = event.description

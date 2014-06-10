@@ -1,0 +1,31 @@
+%h2
+  Register for #{@event.title}
+- if @event.over_21
+  %strong
+    ADULTS ONLY: 21 Years and older
+  %br
+
+%h4
+  Time: #{@event.from.strftime('%B %d, %Y %I:%M%p')} to #{@event.to.strftime('%I:%M%p')}
+  - if @event.venue_name.present?
+    %br
+    Location: #{@event.venue_name}
+  - if @event.venue_address.present?
+    = " - "
+    = link_to '(google map)', "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{CGI::escape(@event.venue.address)}&ie=UTF8&z=16"
+
+%article
+  = @event.description
+
+#register-body
+  - if flash[:error]
+    .alert.alert-danger
+      %p= flash[:error]
+  .media
+    - if @event.image
+      .pull-left
+        = image_tag @event.image.thumb('300x300').url, class: "registration-image media-object"
+    .media-body
+      - if @event.upcoming?
+        #register-form-wrapper
+          = render 'form'

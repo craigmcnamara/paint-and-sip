@@ -1,0 +1,30 @@
+= simple_form_for(@registration ||= @event.registrations.build, html_options: { role: 'form', class: 'form-horizontal'}) do |f|
+  = hidden_field_tag 'event_id', @event.id
+  = hidden_field_tag 'event_cost', @event.seat_cost
+  .form-group
+    = f.label :party_name
+    = f.text_field :party_name, placeholder: "", required: true, class: "form-control"
+  .form-group
+    = f.label :phone_number
+    = f.text_field :phone_number, placeholder: "Ex: 650-555-5555", required: true, class: "form-control"
+  .form-group 
+    = f.input :quantity, collection: @event.remaining_seat_options, label: "How many Painters?", input_html: { class: 'form-control' }
+  - if @event.camp_session
+    - [:morning_camp, :afternoon_camp, :am_extended, :lunch_extended_hours, :pm_extended_hours].each do |camp_attr|
+      .checkbox
+        - price = Event::CAMP_COSTS[camp_attr]
+        %label
+          = f.check_box camp_attr, 'data-price' => price
+          = "#{t(camp_attr)} #{number_to_currency price}".html_safe
+  - else
+    .form-group
+      = f.label :voucher_code
+      = f.text_field :living_social_code, placeholder: "Living Social or Groupon, etc.", class: "form-control"
+      Credit card still required to verify vouchers.
+  .form-group
+    #total
+      Total: $0
+  .form-group
+    %script.stripe-button{"data-key" => Rails.configuration.stripe[:publishable_key], src: "https://checkout.stripe.com/v2/checkout.js"}
+  .form-group
+    = f.text_area :notes, placeholder: "(optional) - Notes", class: "form-control", rows: 3

@@ -1,0 +1,6 @@
+%h2 Coming Soon
+%h4 To schedule a class call: (650) 434-2781
+#masonry-container.gallery.transitions-enabled.infinite-scroll.clearfix
+  - Image.all.each do |image|
+    <div id=#{"image_#{image.id}"} class="image">
+    \#{image_tag image.thumb("200x200").url}

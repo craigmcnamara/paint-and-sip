@@ -1,0 +1,6 @@
+= div_for event do
+  %time.date{:datetime => event.from}
+    = event.from.strftime('%b %d').html_safe
+  %h1= link_to event.title, event_path(event)
+  %p= event.description
+  = image_tag event.image.thumb("400x400").url

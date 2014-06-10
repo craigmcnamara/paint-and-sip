@@ -1,0 +1,23 @@
+%h1#logo.pull-left
+  = link_to image_tag('logo.jpg'), root_path, :alt => 'Paint and Sip'
+#page-address.pull-right
+  %address.adr
+    .street-address
+      123 Fake Street
+    / .extended-address
+    /   Suite 207
+    %span.locality
+      San Mateo
+    %span.region
+      CA
+    %span.postal-code
+      94403
+    .tel{itemprop: "telephone"}
+      %a{href: "tel:+16505551212"}
+        (650) 555-1212
+    %a.email{href: "mailto:info@paint-and-sip"}
+      info@paint-and-sip
+    %br
+    %a{href: 'https://www.facebook.com/pain-and-sip'}
+      facebook.com/paint-and-sip
+.clearfix

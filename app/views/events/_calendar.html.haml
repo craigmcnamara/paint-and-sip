@@ -1,0 +1,31 @@
+#calendar
+  %h2
+    #month.well
+      = link_to "Last Month ", events_path(:month => (@date.prev_month).strftime("%Y-%m-%d")), class: 'btn btn-default active pull-left'
+      = @date.strftime("%B %Y")
+      = link_to "Next Month", events_path(:month => (@date.next_month).strftime("%Y-%m-%d")), class: 'btn btn-default active pull-right'
+      .clearfix
+
+  = calendar_for(events.reject{ |e| e.from.nil? }.reverse, :year => @date.year, :month => @date.month, :today => Time.zone.today, :calendar => @calendar_class, html: { class: 'table table-bordered' }) do |calendar|
+    = calendar.head('Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday')
+    = calendar.day(:day_method => :from) do |date, events|
+      %span.badge= date.day
+      - events.each do |event|
+        .thumbnail
+          - if event.image
+            - if event.allow_registration?
+              = link_to(image_tag(event.image.thumb("140x140").url), new_event_registration_path(event))
+            - else
+              = image_tag(event.image.thumb("140x140").url)
+          .caption
+            - if event.over_21
+              %span.label.label-danger 21 and over
+            - else
+              - unless event.private_event?
+                %span.label.label-success All Ages
+            = link_to new_event_registration_path(event) do
+              = event.title
+              - if !event.private_event
+                - if event.seat_cost and event.allow_registration?
+                  = number_to_currency(event.seat_cost, precision: 0) 
+              = event.from.strftime("%l:%M %P")

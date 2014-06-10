@@ -1,0 +1,13 @@
+%head
+  %meta{:charset => Rails.application.config.encoding}/
+  /[if IE] <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  %title= yield(:title) || 'PaintAndSip'
+  = raw %(<meta name="description" content="#{meta_description}" />) if meta_description.present?
+  = raw %(<meta name="keywords" content="#{meta_keywords}">) if meta_keywords.present?
+  = raw %(<link rel="canonical" content="#{@canonical}" />) if @canonical.present?
+  = csrf_meta_tag
+  = yield :meta
+  = stylesheet_link_tag "application"
+  = stylesheet_link_tag "home" if home_page?
+  %link{:href => "https://fonts.googleapis.com/css?family=Oxygen", :rel => "stylesheet", :type => "text/css"}/
+  = yield :stylesheets

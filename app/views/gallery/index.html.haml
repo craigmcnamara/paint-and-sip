@@ -1,0 +1,9 @@
+- Image.all.in_groups_of(4, false) do |group|
+  .row
+    - group.each do |image|
+      .col-xs-6.col-md-3
+        = content_tag(:div, image, class: "thumbnail") do
+          = image_tag image.thumb("360x300").url
+          .caption
+            %h3
+              = image.image_name

@@ -1,0 +1,34 @@
+.media
+  - if @event.image
+    .pull-left
+      = image_tag @event.image.thumb("400x400").url, :class => 'event-image media-object'
+  .media-body
+    - if @event.private_event
+      %span This is a private event.
+    - else
+      - if @event.upcoming? && current_registration.event_id != @event.id
+        #register-now
+          = link_to "Register Now", "/registrations/new?event_id=#{@event.id}", :class => "button"
+    %h4
+      - if current_registration.event_id == @event.id
+        Registered #{pluralize(current_registration.quantity, 'seats')}
+        to paint
+        \#{@event.title}
+        <br/ >
+      - if @event.venue
+        Location: #{@event.venue_name}
+      - if @event.venue_address.present?
+        = " - "
+        = link_to '(google map)', "http://maps.google.com/maps?f=q&source=s_q&hl=en&geocode=&q=#{CGI::escape(@event.venue.address)}&ie=UTF8&z=16"
+        %br/
+      - if @event.over_21
+        %strong ADULTS ONLY: 21 Years and older
+      - if @event.from
+        Time: #{@event.from.strftime('%B %d, %Y %k:%M%p')}
+        to #{@event.to.strftime('%k:%M%p')}
+      %br
+      Paid: #{number_to_currency(@registration.charged_in_dollars, precision: 2)}
+
+    = raw @event.description
+
+- content_for :stylesheets, stylesheet_link_tag('events')

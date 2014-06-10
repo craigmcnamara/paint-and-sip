@@ -1,0 +1,1 @@
+Date::DATE_FORMATS[:url_date] = '%Y-%m-%d'

@@ -1,0 +1,12 @@
+- content_for :stylesheets, stylesheet_link_tag('events')
+
+- if @page
+  %article#copy
+    - cache @page do
+      = @page.html
+
+- if params[:view] == 'list'
+  %section#events
+    = render @events
+- else
+  = render 'calendar', :events => @events
